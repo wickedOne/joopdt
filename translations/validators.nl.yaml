@@ -1,0 +1,4 @@
+form:
+  story:
+    surname:
+      invalid: dat is niet johan's achternaam

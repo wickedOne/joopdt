@@ -1,0 +1,27 @@
+page:
+  index:
+    title: de wondere wereld van jopie
+    paragraph_one: "we hebben ze waarschijnlijk allemaal; bizarre, vrolijke of bizar vrolijke avonturen met johan. om de één of andere reden leek er altijd wel iets te gebeuren wanneer je met hem samen was, iets wat in de jaren daarna door jou of door hemzelf in geuren en kleuren werd verteld aan iedereen die het horen wou."
+    paragraph_two: "of het nou die ene keer was dat jullie naar de kroeg gingen, de trein mistten, dat festival- of concert bezoek of die vakantie. het leek ons een leuk idee om ervaringen te registreren om in een later stadium samen te voegen in een boekwerkje zodat iedereen kan genieten van de verhalen door de ogen van de mensen die hem zo dierbaar waren."
+    paragraph_three: "of het een verhaal van tien of tienduizend woorden is. of je het anoniem wilt delen of met naam, toenaam en rugnummer. of je één verhaal deelt of tienhonderd omdat je niet kan kiezen: alles is prima."
+form:
+  story:
+    email:
+      label: e-mail
+      help: "wordt niet gedeeld of gepubliceerd en is enkel zodat er contact met je opgenomen kan worden wanneer er meer bekend is over hoe en wanneer dit alles gepubliceerd gaat worden."
+    name:
+      label: naam
+      placeholder: leeg laten als je anoniem wenst te blijven
+    title:
+      label: titel
+    text:
+      label: verhaal
+    attachments:
+      label: foto's
+    notify:
+      label: mail mij een kopie van mijn verhaal
+    surname:
+      label: johan's achternaam
+      error: dat is niet johan's achternaam
+    button:
+      submit: verstuur
