@@ -12,6 +12,8 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
             $directory: '/usr/local/share/uploads'
+            $gmailUser: '%env(GMAIL_USER)%'
+            $gmailPass: '%env(GMAIL_PASS)%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

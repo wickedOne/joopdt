@@ -12,11 +12,13 @@ namespace App\Controller;
 
 use App\Entity\Story;
 use App\Form\Type\StoryType;
+use App\Service\MailService;
 use App\Service\UploadService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -44,6 +46,7 @@ class JoopdtController extends AbstractController
      * @param \App\Service\UploadService                         $uploadService
      * @param \Doctrine\ORM\EntityManagerInterface               $em
      * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
+     * @param \App\Service\MailService                           $mailer
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
@@ -51,7 +54,7 @@ class JoopdtController extends AbstractController
      * @throws \Symfony\Component\Form\Exception\RuntimeException
      * @throws \Symfony\Component\HttpFoundation\File\Exception\UploadException
      */
-    public function story(Request $request, UploadService $uploadService, EntityManagerInterface $em, TranslatorInterface $translator): Response
+    public function story(Request $request, UploadService $uploadService, EntityManagerInterface $em, TranslatorInterface $translator, MailService $mailer): Response
     {
         $form = $this->createForm(StoryType::class, new Story(), []);
 
@@ -69,8 +72,17 @@ class JoopdtController extends AbstractController
             $em->persist($story);
             $em->flush();
 
+            if (true === $story->isNotify()) {
+                try {
+                    $mailer->sendStory($story);
+                } catch (TransportExceptionInterface $e) {
+                    $this->addFlash('error', $translator->trans('email.send.failed'));
+                }
+            }
+
             $this->addFlash('info', $translator->trans('story.submit.success'));
-            $this->redirect($this->generateUrl('app_index'));
+
+            return $this->redirect($this->generateUrl('app_index'));
         }
 
         return $this->render('story.html.twig', [

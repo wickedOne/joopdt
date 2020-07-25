@@ -28,3 +28,9 @@ form:
 story:
   submit:
     success: 'bedankt voor je verhaal!'
+mailer:
+  your:
+    story: 'jouw joopdt verhaal'
+email:
+  send:
+    failed: 'het is niet gelukt om je verhaal naar je te mailen'
