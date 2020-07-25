@@ -81,3 +81,10 @@ body {
 #story_text {
     height: 35em;
 }
+
+.custom-file-label {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding-right: 15%;
+}
