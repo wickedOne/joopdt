@@ -18,11 +18,13 @@ form:
       label: verhaal
     attachments:
       label: foto's
+      help: 'maximaal 20Mb'
     notify:
       label: mail mij een kopie van mijn verhaal
     surname:
       label: johan's achternaam
       error: dat is niet johan's achternaam
+      help: "dit veld is nodig om spam te voorkomen. clueless? westdijk met zonder t"
     button:
       submit: verstuur
 story:

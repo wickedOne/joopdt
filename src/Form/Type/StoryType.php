@@ -58,6 +58,7 @@ class StoryType extends AbstractType
                 'required' => false,
                 'mapped' => false,
                 'label' => 'form.story.attachments.label',
+                'help' => 'form.story.attachments.help',
             ])
             ->add('notify', CheckboxType::class, [
                 'label' => 'form.story.notify.label',
@@ -66,6 +67,7 @@ class StoryType extends AbstractType
             ->add('surname', TextType::class, [
                 'label' => 'form.story.surname.label',
                 'mapped' => false,
+                'help' => 'form.story.surname.help',
                 'constraints' => [
                     new EqualTo(['value' => 'wesdijk', 'message' => 'form.story.surname.invalid']),
                 ],
