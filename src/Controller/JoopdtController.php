@@ -13,10 +13,12 @@ namespace App\Controller;
 use App\Entity\Story;
 use App\Form\Type\StoryType;
 use App\Service\UploadService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Joopdt Controller.
@@ -38,15 +40,18 @@ class JoopdtController extends AbstractController
     /**
      * @Route(path="/story", name="app_story")
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \App\Service\UploadService                $uploadService
+     * @param \Symfony\Component\HttpFoundation\Request          $request
+     * @param \App\Service\UploadService                         $uploadService
+     * @param \Doctrine\ORM\EntityManagerInterface               $em
+     * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Symfony\Component\Form\Exception\OutOfBoundsException
      * @throws \Symfony\Component\Form\Exception\RuntimeException
+     * @throws \Symfony\Component\HttpFoundation\File\Exception\UploadException
      */
-    public function story(Request $request, UploadService $uploadService): Response
+    public function story(Request $request, UploadService $uploadService, EntityManagerInterface $em, TranslatorInterface $translator): Response
     {
         $form = $this->createForm(StoryType::class, new Story(), []);
 
@@ -56,10 +61,16 @@ class JoopdtController extends AbstractController
             /** @var Story $story */
             $story = $form->getData();
 
-            foreach ($form->get('attachments') as $attachment) {
+            foreach ($form->get('attachments')->getData() as $attachment) {
                 $file = $uploadService->upload($attachment);
                 $story->addFile($file);
             }
+
+            $em->persist($story);
+            $em->flush();
+
+            $this->addFlash('info', $translator->trans('story.submit.success'));
+            $this->redirect($this->generateUrl('app_index'));
         }
 
         return $this->render('story.html.twig', [

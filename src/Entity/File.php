@@ -23,6 +23,15 @@ use Doctrine\ORM\Mapping as ORM;
 class File
 {
     /**
+     * @var int
+     *
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string")
@@ -54,6 +63,7 @@ class File
      * @var \App\Entity\Story
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Story", inversedBy="files")
+     * @ORM\JoinColumn(referencedColumnName="id", onDelete="CASCADE")
      */
     private $story;
 
@@ -72,6 +82,26 @@ class File
     private $modified;
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return File
+     */
+    public function setId(int $id): File
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function getName(): string
@@ -81,10 +111,14 @@ class File
 
     /**
      * @param string $name
+     *
+     * @return File
      */
-    public function setName(string $name): void
+    public function setName(string $name): File
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -97,10 +131,14 @@ class File
 
     /**
      * @param string $originalName
+     *
+     * @return File
      */
-    public function setOriginalName(string $originalName): void
+    public function setOriginalName(string $originalName): File
     {
         $this->originalName = $originalName;
+
+        return $this;
     }
 
     /**
@@ -113,10 +151,14 @@ class File
 
     /**
      * @param string $mimeType
+     *
+     * @return File
      */
-    public function setMimeType(string $mimeType): void
+    public function setMimeType(string $mimeType): File
     {
         $this->mimeType = $mimeType;
+
+        return $this;
     }
 
     /**
@@ -129,10 +171,34 @@ class File
 
     /**
      * @param int $size
+     *
+     * @return File
      */
-    public function setSize(int $size): void
+    public function setSize(int $size): File
     {
         $this->size = $size;
+
+        return $this;
+    }
+
+    /**
+     * @return \App\Entity\Story
+     */
+    public function getStory(): \App\Entity\Story
+    {
+        return $this->story;
+    }
+
+    /**
+     * @param \App\Entity\Story $story
+     *
+     * @return File
+     */
+    public function setStory(\App\Entity\Story $story): File
+    {
+        $this->story = $story;
+
+        return $this;
     }
 
     /**
@@ -145,26 +211,14 @@ class File
 
     /**
      * @param \DateTimeInterface $created
+     *
+     * @return File
      */
-    public function setCreated(\DateTimeInterface $created): void
+    public function setCreated(\DateTimeInterface $created): File
     {
         $this->created = $created;
-    }
 
-    /**
-     * @return \App\Entity\Story
-     */
-    public function getStory(): Story
-    {
-        return $this->story;
-    }
-
-    /**
-     * @param \App\Entity\Story $story
-     */
-    public function setStory(Story $story): void
-    {
-        $this->story = $story;
+        return $this;
     }
 
     /**
@@ -177,10 +231,14 @@ class File
 
     /**
      * @param \DateTimeInterface $modified
+     *
+     * @return File
      */
-    public function setModified(\DateTimeInterface $modified): void
+    public function setModified(\DateTimeInterface $modified): File
     {
         $this->modified = $modified;
+
+        return $this;
     }
 
     /**

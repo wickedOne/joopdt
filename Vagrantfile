@@ -34,11 +34,11 @@ Vagrant.configure("2") do |config|
 
     joopdt.vm.provision :puppet do |puppet|
         puppet.environment = 'development'
-        puppet.environment_path = 'puppet/environments'
-        puppet.module_path = 'puppet/modules'
+        puppet.environment_path = 'support/puppet/environments'
+        puppet.module_path = 'support/puppet/modules'
         puppet.manifest_file = 'site.pp'
-        puppet.manifests_path = 'puppet/manifests'
-        puppet.hiera_config_path = 'puppet/hiera_vagrant.yaml'
+        puppet.manifests_path = 'support/puppet/manifests'
+        puppet.hiera_config_path = 'support/puppet/hiera_vagrant.yaml'
         puppet.working_directory = '/vagrant'
         puppet.options = [
             '--verbose',

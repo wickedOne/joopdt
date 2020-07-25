@@ -12,6 +12,7 @@ namespace App\Service;
 
 use App\Entity\File;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -46,6 +47,8 @@ class UploadService
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return \App\Entity\File
+     *
+     * @throws \Symfony\Component\HttpFoundation\File\Exception\UploadException
      */
     public function upload(UploadedFile $file): File
     {
@@ -54,18 +57,17 @@ class UploadService
         $fileName = $safeFilename.'-'.uniqid('', true).'.'.$file->guessExtension();
 
         try {
-            $file->move($this->getDirectory(), $fileName);
+            $moved = $file->move($this->getDirectory(), $fileName);
         } catch (FileException $e) {
-            // ... handle exception if something happens during file upload
+            throw new UploadException(sprintf('Could not upload file %s', $file->getClientOriginalName()));
         }
 
-        $fileReference = new File();
-        $fileReference->setMimeType($file->getMimeType());
-        $fileReference->setName($fileName);
-        $fileReference->setOriginalName($originalFilename);
-        $fileReference->setSize($file->getSize());
-
-        return $fileReference;
+        return (new File())
+            ->setMimeType($moved->getMimeType())
+            ->setName($fileName)
+            ->setOriginalName($originalFilename)
+            ->setSize($moved->getSize())
+        ;
     }
 
     /**

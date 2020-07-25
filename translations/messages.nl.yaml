@@ -25,3 +25,6 @@ form:
       error: dat is niet johan's achternaam
     button:
       submit: verstuur
+story:
+  submit:
+    success: 'bedankt voor je verhaal!'

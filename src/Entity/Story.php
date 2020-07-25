@@ -26,6 +26,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Story
 {
     /**
+     * @var int
+     *
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string")
@@ -58,7 +67,7 @@ class Story
     /**
      * @var \App\Entity\File[]|\Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\File", mappedBy="story")
+     * @ORM\OneToMany(targetEntity="App\Entity\File", mappedBy="story", cascade={"persist", "remove"})
      */
     private $files;
 
@@ -90,6 +99,22 @@ class Story
     {
         $this->files = new ArrayCollection();
         $this->notify = false;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     /**
@@ -178,6 +203,7 @@ class Story
     public function addFile(File $file): void
     {
         if (false === $this->hasFile($file)) {
+            $file->setStory($this);
             $this->files->add($file);
         }
     }
