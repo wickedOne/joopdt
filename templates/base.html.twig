@@ -9,7 +9,30 @@
         {% endblock %}
     </head>
     <body>
+
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        {% for label, messages in app.flashes(['success', 'warning']) %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <header class="masthead mb-auto text-center">
+            <div class="inner">
+                <h3 class="masthead-brand">{{ 'page.index.title'|trans }}</h3>
+            </div>
+        </header>
+
         {% block body %}{% endblock %}
+
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+
+            </div>
+        </footer>
+    </div>
         {% include 'banner.html.twig' %}
         {% block javascripts %}
             <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

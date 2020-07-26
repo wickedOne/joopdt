@@ -76,11 +76,11 @@ class JoopdtController extends AbstractController
                 try {
                     $mailer->sendStory($story);
                 } catch (TransportExceptionInterface $e) {
-                    $this->addFlash('error', $translator->trans('email.send.failed'));
+                    $this->addFlash('warning', $translator->trans('email.send.failed'));
                 }
             }
 
-            $this->addFlash('info', $translator->trans('story.submit.success'));
+            $this->addFlash('success', $translator->trans('story.submit.success'));
 
             return $this->redirect($this->generateUrl('app_index'));
         }

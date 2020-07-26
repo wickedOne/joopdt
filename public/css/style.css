@@ -31,6 +31,10 @@ body {
     background-blend-mode: exclusion
 }
 
+.alert-success,
+.alert-warning {
+    text-shadow: none;
+}
 .cover-container {
     max-width: 42em;;
 }
