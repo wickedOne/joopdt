@@ -1,0 +1,11 @@
+ant_build_generator:
+  target_path: 'build'
+  project:
+    name: 'joopdt'
+    image: 'https://www.proud2bme.nl/fgw.php?action=media&id=273080'
+  targets:
+    vendors-deploy: ~
+    prepare-production: ~
+    deploy-cleanup: ~
+  builds:
+    deploy-production: ['vendors-deploy', 'prepare-production', 'deploy-cleanup']

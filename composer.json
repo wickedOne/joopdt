@@ -45,6 +45,7 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "eloo/ant-build-generator": "^1.4",
         "friendsofphp/php-cs-fixer": "^2.16",
         "roave/security-advisories": "dev-master",
         "symfony/browser-kit": "^5.1",
@@ -101,5 +102,11 @@
             "allow-contrib": "true",
             "require": "5.1.*"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:e-loo/ant-build-generator.git"
+        }
+    ]
 }

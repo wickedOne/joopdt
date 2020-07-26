@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="joopdt" default="test" basedir="../">
+  <property name="pdepend" value="${basedir}/vendor/bin/pdepend"/>
+  <property name="phpcpd" value="${basedir}/vendor/bin/phpcpd"/>
+  <property name="phpcs" value="${basedir}/vendor/bin/phpcs"/>
+  <property name="phploc" value="${basedir}/vendor/bin/phploc"/>
+  <property name="phpmd" value="${basedir}/vendor/bin/phpmd"/>
+  <property name="phpunit" value="${basedir}/vendor/bin/phpunit"/>
+  <property name="phpstan" value="${basedir}/vendor/bin/phpstan"/>
+  <property name="php-cs-fixer" value="${basedir}/vendor/bin/php-cs-fixer"/>
+  <property name="deptrac" value="${basedir}/vendor/bin/deptrac"/>
+  <property name="composer" value="/usr/local/bin/composer"/>
+  <property name="phpdbg" value="/usr/bin/phpdbg"/>
+  <property name="phpdox" value="/usr/bin/phpdox"/>
+  <property name="php" value="/usr/bin/php"/>
+  <property name="grep" value="/bin/grep"/>
+  <property name="sed" value="/bin/sed"/>
+  <property name="yarn" value="/usr/bin/yarn"/>
+  <property name="curl" value="/usr/bin/curl"/>
+  <property name="git" value="/usr/bin/git"/>
+  <property name="cat" value="/bin/cat"/>
+  <property name="jscs" value="/usr/local/bin/jscs"/>
+  <property name="bash" value="/bin/bash"/>
+  <property name="commit-checker" value="/home/eva/commits/commits.php"/>
+  <property name="commit-template" value="/home/eva/commits/template.txt"/>
+  <property environment="env"/>
+  <property name="id" value="${env.ghprbPullId}"/>
+  <property name="repo" value="${env.ghprbGhRepository}"/>
+  <property name="token" value="${env.gitToken}"/>
+  <taskdef resource="net/sf/antcontrib/antlib.xml">
+    <classpath>
+      <pathelement location="/usr/share/ant/lib/ant-contrib.jar"/>
+    </classpath>
+  </taskdef>
+  <target name="deploy-production" depends="vendors-deploy,prepare-production,deploy-cleanup"/>
+  <target name="vendors-deploy" unless="vendors-deploy.done" description="install vendors deployment">
+    <delete dir="${basedir}/vendor"/>
+    <exec executable="${composer}" failonerror="true" taskname="composer">
+      <arg value="install"/>
+      <arg value="--no-dev"/>
+      <arg value="--no-interaction"/>
+      <arg value="--prefer-dist"/>
+      <arg value="--optimize-autoloader"/>
+    </exec>
+    <property name="vendors-deploy.done" value="true"/>
+  </target>
+  <target name="prepare-production" unless="prepare-production.done" description="prepare production for build">
+    <delete file="${basedir}/.env"/>
+    <copy file="${basedir}/.env.prod" tofile="${basedir}/.env"/>
+    <property name="prepare-production.done" value="true"/>
+  </target>
+  <target name="deploy-cleanup" unless="deploy-cleanup.done" description="remove files and directories we don't want on our servers">
+    <delete file="${basedir}/.env.prod"/>
+    <delete file="${basedir}/.env.stage"/>
+    <delete file="${basedir}/.gitignore"/>
+    <delete file="${basedir}/.gitmodules"/>
+    <delete file="${basedir}/.php_cs.dist"/>
+    <delete file="${basedir}/README.md"/>
+    <delete file="${basedir}/depfile.yml"/>
+    <delete file="${basedir}/phpunit.xml.dist"/>
+    <delete file="${basedir}/Vagrantfile"/>
+    <delete file="${basedir}/composer.lock"/>
+    <delete file="${basedir}/phpstan.neon"/>
+    <delete file="${basedir}/phpcs.xml.dist"/>
+    <delete dir="${basedir}/.git"/>
+    <delete dir="${basedir}/support/puppet"/>
+    <delete dir="${basedir}/tests"/>
+    <property name="deploy-cleanup.done" value="true"/>
+  </target>
+</project>
