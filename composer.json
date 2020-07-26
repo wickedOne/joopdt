@@ -4,6 +4,7 @@
     "require": {
         "php": "^7.2.5",
         "ext-ctype": "*",
+        "ext-dom": "20031129",
         "ext-iconv": "*",
         "composer/package-versions-deprecated": "^1.10",
         "deployer/deployer": "^6.8",
