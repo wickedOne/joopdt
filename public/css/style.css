@@ -67,6 +67,7 @@ body {
 
 .cover {
     padding: 0 1.5rem;
+    z-index: 200;
 }
 
 .cover .btn-lg {
@@ -87,4 +88,46 @@ body {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     padding-right: 15%;
+}
+
+.rainbow {
+    position: fixed;
+    margin-left: 1rem;
+}
+
+.rainbow-shadow div {
+    box-shadow: inset 0 11px 1rem -10px #333,
+    inset 0 -11px 1rem -10px #333;
+}
+.rainbow-animate div {
+    animation-duration: 3s;
+    animation-name: slidein;
+}
+
+@keyframes slidein {
+    from {
+        height: 0;
+    }
+
+    to {
+        height: 100%;
+    }
+}
+.rainbow-purple {
+    background-color: #86007D;
+}
+.rainbow-blue {
+    background-color: #0000F9;
+}
+.rainbow-green {
+    background-color: #008018;
+}
+.rainbow-yellow {
+    background-color: #FFFF41;
+}
+.rainbow-orange {
+    background-color: #FFA52C;
+}
+.rainbow-red {
+    background-color: #FF0018;
 }

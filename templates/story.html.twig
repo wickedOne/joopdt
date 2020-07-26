@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="masthead mb-auto text-center">
             <div class="inner">
                 <h3 class="masthead-brand">{{ 'page.index.title'|trans }}</h3>
             </div>
         </header>
+
         <main role="main" class="inner cover">
             <p class="lead">
                 {{ form_start(form) }}
